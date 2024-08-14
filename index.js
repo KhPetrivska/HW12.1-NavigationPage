@@ -1,14 +1,26 @@
 "use strict";
-const buttonsDiv = document.getElementById("buttons-container");
+//debugger
+const enterBtn = document.getElementById("enter-button");
+const goBtn = document.getElementById("go-button");
 
-buttonsDiv.addEventListener("click", function (event) {
-  const currentBtn = document.getElementById("cur");
-  const previousBtn = document.getElementById("prev");
-  if (event.target === currentBtn) {
-    alert("Current location: " + window.location.href);
-  } else if (event.target === previousBtn) {
-    window.history.length > 1 ? window.history.back() : alert("No data");
-  } else{
-    return;
-  }
+let linkFromUser = null;
+
+enterBtn.addEventListener("click", function () {
+  linkFromUser = prompt("Enter the link you want to visit.");
 });
+goBtn.addEventListener("click", function () {
+  isUrlValid(linkFromUser)
+    ? (window.location.href = linkFromUser)
+    : alert(
+        "Please enter the valid URL you what to visit using another button."
+      );
+});
+
+function isUrlValid(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
